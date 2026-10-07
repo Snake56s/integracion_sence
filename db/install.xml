@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<XMLDB PATH="blocks/sence_integration/db" VERSION="2024100700" COMMENT="XMLDB file for SENCE course mapping tables">
+  <TABLES>
+    <TABLE NAME="block_sence_courses" COMMENT="Stores SENCE ID mappings for Moodle courses/cohorts/groups">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
+        <FIELD NAME="courseid" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false" COMMENT="Moodle course ID"/>
+        <FIELD NAME="groupid" TYPE="int" LENGTH="10" NOTNULL="false" DEFAULT="0" SEQUENCE="false" COMMENT="Moodle group/cohort ID, 0 for whole course"/>
+        <FIELD NAME="codigo_oferta" TYPE="char" LENGTH="100" NOTNULL="true" SEQUENCE="false" COMMENT="SENCE Offer Code"/>
+        <FIELD NAME="codigo_grupo" TYPE="char" LENGTH="100" NOTNULL="true" SEQUENCE="false" COMMENT="SENCE Group/Section Code"/>
+        <FIELD NAME="codigo_envio" TYPE="char" LENGTH="100" NOTNULL="false" SEQUENCE="false" COMMENT="Optional custom transmission code"/>
+        <FIELD NAME="rut_otec" TYPE="char" LENGTH="20" NOTNULL="false" SEQUENCE="false" COMMENT="Optional specific OTEC RUT override"/>
+        <FIELD NAME="token_sence" TYPE="char" LENGTH="64" NOTNULL="false" SEQUENCE="false" COMMENT="Optional specific Token override"/>
+        <FIELD NAME="enabled" TYPE="int" LENGTH="1" NOTNULL="true" DEFAULT="1" SEQUENCE="false" COMMENT="Is mapping active"/>
+        <FIELD NAME="timecreated" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false"/>
+        <FIELD NAME="timemodified" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+      </KEYS>
+      <INDEXES>
+        <INDEX NAME="course_group_idx" UNIQUE="false" FIELDS="courseid, groupid"/>
+      </INDEXES>
+    </TABLE>
+    <TABLE NAME="block_sence_logs" COMMENT="Logs of SENCE transmissions">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
+        <FIELD NAME="courseid" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false"/>
+        <FIELD NAME="sence_course_id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false"/>
+        <FIELD NAME="id_proceso" TYPE="char" LENGTH="50" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="status" TYPE="char" LENGTH="20" NOTNULL="true" SEQUENCE="false" COMMENT="success, error, warning"/>
+        <FIELD NAME="payload" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="response" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="timecreated" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+      </KEYS>
+    </TABLE>
+  </TABLES>
+</XMLDB>
